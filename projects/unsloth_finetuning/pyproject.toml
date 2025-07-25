@@ -1,0 +1,14 @@
+[project]
+name = "unsloth_finetuning"
+version = "0.1.0"
+description = "Unsloth Finetuning"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "unsloth"
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.30.0",
+]

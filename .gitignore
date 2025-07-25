@@ -1,1 +1,13 @@
+__pychache__
+*.Trash*
+*.env
+*.*_env
+*.so
+*.o
+*.Python
+*.cache
+*.ipynb_checkpoints/*
 .ignore/*
+.venv/*
+autotrain.db
+autotrain.log
