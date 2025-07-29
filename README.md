@@ -32,7 +32,7 @@ Refer to local README.md files for additional instructions. For example, the `au
 
 ~~~bash
 $ cd projects/
-$ uv init new_project # Creates new project root directory projects/new_project
+$ uv init new_project --bare --no-workspace # Creates new project root directory projects/new_project
 $ cd new_project
 ~~~
 
@@ -72,7 +72,7 @@ You can also create a [new python **package**](https://docs.astral.sh/uv/concept
 
 ~~~bash
 $ cd projects/new_project
-$ uv init --package my_new_package # Create a new package
+$ uv init --package my_new_package --no-workspace # Create a new package
 $ ... # Modify this as needed
 $ uv run my_new_package # Installs package into new_project and executes the main() function
 ~~~
