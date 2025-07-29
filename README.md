@@ -16,7 +16,7 @@ Then navigate to `projects/`, select the relevant project directory, and install
 
 ~~~bash
 $ cd projects/selected_project
-$ uv sync
+$ uv sync --no-install-workspace
 $ uv run ipython kernel install --user --env VIRTUAL_ENV ../../.venv --name=selected_project
 ~~~
 
