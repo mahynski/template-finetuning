@@ -2,7 +2,7 @@
 
 1. Install the virtual environment (only needs to be done once)
 ~~~bash
-$ uv sync
+$ uv sync --no-install-workspace
 ~~~
 
 2. Install additional tokenizers (only needs to be done once)
