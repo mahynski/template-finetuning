@@ -3,7 +3,7 @@ name = "huggingface_trl"
 version = "0.1.0"
 description = "HuggingFace Transformer Reinforcement Library"
 readme = "README.md"
-requires-python = "==3.10.*"
+requires-python = ">=3.10"
 dependencies = [
     "trl",
 ]
