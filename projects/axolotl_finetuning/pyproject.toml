@@ -1,1 +1,27 @@
 [project]
+name = "axolotl_finetuning"
+version = "0.1.0"
+description = "Finetuning with Axolotl"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "packaging",
+    "setuptools",
+    "wheel",
+    "torch==2.6.0",
+    "awscli",
+    "pydantic",
+    "axolotl[deepspeed,flash-attn,vllm]"
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=6.30.0",
+]
+
+[tool.uv]
+no-build-isolation-package = ["axolotl", "flash-attn"]
+
+[[tool.uv.dependency-metadata]]
+name = "flash-attn"
+requires-dist = ["torch", "einops"]
