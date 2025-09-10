@@ -7,7 +7,6 @@ Different finetuning frameworks have been installed in the `projects/` directory
 To get started:
 
 ~~~bash
-$ bash .devcontainer/setup.sh
 $ bash .devcontainer/start_mlflow.sh
 $ bash .devcontainer/start_jupyter.sh
 ~~~
