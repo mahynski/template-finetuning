@@ -12,6 +12,9 @@ dependencies = [
     "bitsandbytes",
     "transformers",
     "scipy",
+    "evaluate",
+    "pillow",
+    "scikit-learn",
 ]
 
 [dependency-groups]
