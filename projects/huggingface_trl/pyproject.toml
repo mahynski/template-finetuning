@@ -6,6 +6,17 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "trl",
+    "datasets",
+    "peft",
+    "accelerate",
+    "bitsandbytes",
+    "transformers",
+    "scipy",
+    "evaluate",
+    "pillow",
+    "scikit-learn",
+    "matplotlib",
+    "lightning",
 ]
 
 [dependency-groups]

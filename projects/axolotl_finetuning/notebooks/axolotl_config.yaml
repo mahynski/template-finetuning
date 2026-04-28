@@ -1,0 +1,74 @@
+# Axolotl QLoRA Config — TinyLlama 1.1B Chat
+# Reference: https://axolotl-ai-cloud.github.io/axolotl/docs/config.qmd
+#
+# This is the QLoRA variant (load_in_4bit: true + adapter: lora).
+# For standard LoRA, set load_in_4bit: false (and increase GPU memory budget).
+# For 8-bit LoRA, set load_in_8bit: true, load_in_4bit: false.
+
+base_model: TinyLlama/TinyLlama-1.1B-Chat-v1.0
+model_type: LlamaForCausalLM
+tokenizer_type: LlamaTokenizer
+
+# --- Quantization ---
+load_in_8bit: false
+load_in_4bit: true   # true = QLoRA; set false for standard LoRA
+strict: false
+
+# --- Dataset ---
+datasets:
+  - path: mhenrichsen/alpaca_data_cleaned
+    type: alpaca       # MUST match the actual data format; see notebook for details
+    ds_type: parquet
+    split: train
+    shards: 1
+
+dataset_prepared_path: /tmp/axolotl_prepared
+val_set_size: 0.05
+output_dir: /tmp/axolotl_output
+
+# --- Sequence ---
+sequence_len: 512
+sample_packing: false   # Set true only after verifying dataset has correct EOS tokens
+
+# --- Adapter (LoRA / QLoRA) ---
+adapter: lora
+lora_r: 16
+lora_alpha: 32          # Rule of thumb: alpha = 2 * r
+lora_dropout: 0.05
+lora_target_modules:
+  - q_proj
+  - v_proj
+
+# --- Logging ---
+wandb_project:
+mlflow_tracking_uri: http://127.0.0.1:1235
+mlflow_experiment_name: axolotl-tinyllama-qlora
+
+# --- Training ---
+gradient_accumulation_steps: 4
+micro_batch_size: 2
+num_epochs: 1
+optimizer: adamw_bnb_8bit   # 8-bit Adam saves ~1 GB VRAM at no quality cost
+lr_scheduler: cosine
+learning_rate: 0.0002
+
+train_on_inputs: false
+group_by_length: false
+bf16: auto
+fp16:
+tf32: false
+
+gradient_checkpointing: true
+logging_steps: 10
+
+# --- Hardware ---
+# flash_attention: true requires Ampere+ GPU (A100, A10, RTX 30/40xx).
+# On older GPUs (V100, T4), set flash_attention: false and xformers_attention: true.
+flash_attention: true
+xformers_attention:
+
+# --- Checkpointing ---
+warmup_steps: 10
+eval_steps: 50
+save_steps: 100
+save_total_limit: 2

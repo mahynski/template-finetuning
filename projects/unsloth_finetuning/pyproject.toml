@@ -5,7 +5,10 @@ description = "Unsloth Finetuning"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "unsloth"
+    "unsloth",
+    "datasets",
+    "trl",
+    "transformers",
 ]
 
 [dependency-groups]
