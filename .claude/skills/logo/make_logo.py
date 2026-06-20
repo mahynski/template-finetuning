@@ -31,7 +31,7 @@ import os
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 # ==== PER-REPO SETTINGS (change these) ====================================
-TITLE = 'template-uv-project'   # repo name, printed under the badge
+TITLE = 'template-finetuning'   # repo name, printed under the badge
 
 
 def draw_hero(md, box, neon):
@@ -49,32 +49,32 @@ def draw_hero(md, box, neon):
     Notes
     -----
     Draw only flat ``neon`` shapes/text -- the caller blurs a copy of this
-    layer to make the glow, so no glow handling is needed here. This default
-    is the ``template-uv-project`` hero: a viewfinder/template frame (four
-    corner brackets) around a lowercase ``uv`` monogram. Replace the body for
-    other repos; keep the fill color ``neon``.
+    layer to make the glow, so no glow handling is needed here. This is the
+    ``template-finetuning`` hero: three mixing-board faders (vertical slider
+    tracks with knobs set to different levels), the universal symbol for
+    fine-tuning / adjusting parameters. Replace the body for other repos; keep
+    the fill color ``neon``.
     """
     fx0, fy0, fx1, fy1 = box
-    arm, th, cr = int(96 * SS), int(26 * SS), int(8 * SS)
+    bw, bh = fx1 - fx0, fy1 - fy0
 
-    def box_sorted(x0, y0, x1, y1):
-        return [min(x0, x1), min(y0, y1), max(x0, x1), max(y0, y1)]
+    n = 3                                   # number of faders
+    track_w = int(22 * SS)                  # vertical track thickness
+    knob_w, knob_h = int(92 * SS), int(44 * SS)  # horizontal knob cap size
+    cr_track, cr_knob = track_w // 2, int(12 * SS)
 
-    def bracket(x, y, dx, dy):  # L bracket with its corner at (x, y)
-        md.rounded_rectangle(box_sorted(x, y, x + dx * arm, y + dy * th), cr, fill=neon)
-        md.rounded_rectangle(box_sorted(x, y, x + dx * th, y + dy * arm), cr, fill=neon)
+    # knob position down each track as a fraction (0 = top, 1 = bottom); the
+    # varied settings are what read as "tuning"
+    levels = [0.34, 0.62, 0.20]
 
-    bracket(fx0, fy0, +1, +1)
-    bracket(fx1, fy0, -1, +1)
-    bracket(fx0, fy1, +1, -1)
-    bracket(fx1, fy1, -1, -1)
-
-    font = jost(int(196 * SS), weight=600)
-    txt = 'uv'
-    tb = md.textbbox((0, 0), txt, font=font)
-    cx, cy = (fx0 + fx1) // 2, (fy0 + fy1) // 2
-    md.text((cx - (tb[2] - tb[0]) // 2 - tb[0], cy - (tb[3] - tb[1]) // 2 - tb[1]),
-            txt, font=font, fill=neon)
+    for i, lvl in enumerate(levels):
+        cx = fx0 + int(bw * (i + 0.5) / n)  # evenly spaced columns
+        md.rounded_rectangle(
+            [cx - track_w // 2, fy0, cx + track_w // 2, fy1], cr_track, fill=neon)
+        ky = fy0 + int(bh * lvl)
+        md.rounded_rectangle(
+            [cx - knob_w // 2, ky - knob_h // 2, cx + knob_w // 2, ky + knob_h // 2],
+            cr_knob, fill=neon)
 
 
 # ==== BRAND FRAME (keep identical across repos) ===========================
