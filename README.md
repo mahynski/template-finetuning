@@ -1,6 +1,9 @@
 # Using this Template
 
-<img src="logo.png" align="right" width=110 />
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="logo-dark.png" />
+  <img src="logo-light.png" align="right" width=110 alt="template-finetuning logo" />
+</picture>
 
 Different finetuning frameworks have been installed in the `projects/` directory to provide environments that enable you to quickly spin up on projects from different providers.
 
